@@ -1,0 +1,18 @@
+{
+  "app_id": "0000000000",
+  "bundle_id": "com.example.yourapp",
+  "simulator_udid": "REPLACE-WITH-UDID  (xcrun simctl list devices | grep Booted)",
+  "device": { "display_type": "APP_IPHONE_67", "size": [1320, 2868] },
+  "brand": {
+    "bg": "linear-gradient(170deg,#F6F1E8,#EFE7D8)",
+    "ink": "#1C1712",
+    "accent": "#D4663C",
+    "bezel": "#0E0E0E",
+    "tilt": "upright"
+  },
+  "screens": [
+    { "name": "01_home",    "launch_args": ["-seed"],                 "headline": "Your strongest <accent>benefit</accent> here" },
+    { "name": "02_feature", "launch_args": ["-seed", "-screen", "x"], "headline": "The next <accent>reason</accent> to tap" }
+  ],
+  "_notes": "ASC credentials come from env, never this file: ASC_KEY_PATH, ASC_ISSUER_ID, ASC_KEY_ID. display_type APP_IPHONE_67=[1320,2868], APP_IPAD_PRO_3GEN_129=[2048,2732]."
+}
