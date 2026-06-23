@@ -49,6 +49,7 @@ Display types: **iPhone 6.9" `APP_IPHONE_67` → 1320×2868**, **iPad 13" `APP_I
 - Rich, seeded data — never empty states.
 
 ## Gotchas (learned the hard way)
+- **RN/Expo onboarding gate:** the real (seeded) screens sit behind onboarding, and `openurl` deep-links pop a confirm dialog that won't proceed without a tap. Skip it without a tap tool by setting the onboarding flag in AsyncStorage: first-launch once, then edit `"$(xcrun simctl get_app_container <udid> <bundle> data)"/Library/Application Support/<bundle>/RCTAsyncLocalStorage_V1/manifest.json` (small values are inline JSON — grep the app for the key, e.g. `onboarding_complete`) and relaunch. Pre-deny notifications: `xcrun simctl privacy <udid> deny user_notifications <bundle>`. Moving between tabs still needs taps — install `idb_companion` (`brew tap facebook/fb && brew install idb-companion`), or bake a DEBUG skip-onboarding + deep-link hook into the app (best).
 
 - **Target the simulator by UDID**, never `booted` — multiple sims = wrong-app captures.
 - **No foreground `sleep` race** — wait for the UI to settle (or use XCUITest), or you capture the boot screen.

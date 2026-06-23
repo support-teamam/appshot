@@ -38,6 +38,7 @@ project, repo, or secrets. App Store Connect credentials come from the environme
 - Current device frame, upright for content; rich seeded data; one consistent template; distinct screens.
 
 ## Gotchas (do not repeat)
+- RN/Expo apps with an onboarding gate: the seeded tabs sit BEHIND the onboarding flow, and `openurl` deep-links only pop a confirm dialog (won't navigate without a tap). Skip onboarding WITHOUT a tap tool: first-launch once (creates storage + auto-seed), then set the onboarding flag in the app's AsyncStorage manifest and relaunch — `"$(xcrun simctl get_app_container <udid> <bundle> data)"/Library/Application Support/<bundle>/RCTAsyncLocalStorage_V1/manifest.json` (small values inline as JSON, e.g. add `"onboarding_complete":"true"` — grep the app for the real key). Pre-deny the notification dialog: `xcrun simctl privacy <udid> deny user_notifications <bundle>`. Navigating BETWEEN tabs still needs taps — install `idb_companion` (`brew tap facebook/fb && brew install idb-companion`) for device-coordinate taps, or (best) bake a DEBUG skip-onboarding + deep-link-to-tab hook into the app so capture needs no UI automation.
 - Capture by **UDID**, not `booted`. No foreground `sleep` race — settle or XCUITest. Status bar resets on reinstall.
 - Build/version numbers may be literal in `Info.plist`, not build settings.
 - CDN PUT to the upload URL must use ONLY Apple's returned headers (no `Authorization`); verify `assetDeliveryState == COMPLETE` (the count lies).
